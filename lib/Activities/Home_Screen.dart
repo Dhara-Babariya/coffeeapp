@@ -74,6 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
     'Rp.40.000','Rp.50.000'
   ];
 
+  List<Color> _alreadyUsedColors = [];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 140,
                   child: ListView.builder(
-
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: images.length,
@@ -156,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 80,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                    color: const Color(0xffd9d9d9),
+                                    color: index % 12 == 0 ? Color(0xff583732) : Color(0xffd9d9d9),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(5),
@@ -392,96 +394,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         )
                                       ],
                                     ),
-                                  ), ),
+                                  ),
+                                  ),
                                 ),
-                                // Container(
-                                //   decoration: BoxDecoration(
-                                //     gradient: const LinearGradient(
-                                //       colors: [
-                                //         Color(0xfff3f1f1),
-                                //         Color(0xffeeebea),
-                                //         Color(0xffeeebea),
-                                //         Color(0xffe3dddc),
-                                //         Color(0xffe3dddc),
-                                //         Color(0xffe3dddc),
-                                //       ],
-                                //       transform: GradientRotation(4),
-                                //       begin: Alignment.bottomRight,
-                                //       end: Alignment.bottomLeft,
-                                //     ),
-                                //     borderRadius: BorderRadius.circular(20)
-                                //   ),
-                                //   child: Column(
-                                //     children: [
-                                //       Padding(
-                                //         padding: const EdgeInsets.only(bottom: 12,top: 15),
-                                //         child: Column(
-                                //           children: [
-                                //             Image.asset(
-                                //               imageList[index],
-                                //               height: 90,
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //       Padding(
-                                //         padding: const EdgeInsets.only(left: 5),
-                                //         child: Column(
-                                //           children: [
-                                //             Row(
-                                //               children: [
-                                //                 Text(
-                                //                   nameList[index],
-                                //                   style: const TextStyle(
-                                //                     fontFamily: 'Poppins',
-                                //                     color: Color(0xff583732),
-                                //                   ),
-                                //                 ),
-                                //               ],
-                                //             ),
-                                //             SizedBox(
-                                //               height: 7 ,
-                                //             ),
-                                //             Padding(
-                                //               padding: const EdgeInsets.only(bottom: 15,right: 15),
-                                //               child: Row(
-                                //                 children: [
-                                //                    Text(
-                                //                     priceList[index],
-                                //                     style: TextStyle(
-                                //                       fontFamily: 'Poppins',
-                                //                       fontWeight: FontWeight.bold
-                                //                       ,
-                                //                       color: Color(0xffd9c61c),
-                                //                     ),),
-                                //                   const Spacer(),
-                                //                   Material(
-                                //                     type: MaterialType.transparency,
-                                //                     child: Ink(
-                                //                       decoration: BoxDecoration(
-                                //                         border: Border.all(width: 0),
-                                //                         color: Color(0xff531607),
-                                //                       ),
-                                //                       child: InkWell(
-                                //                         //borderRadius: BorderRadius.circular(100.0),
-                                //                         onTap: () {},
-                                //                         child: Icon(
-                                //                           Icons.add,
-                                //                           size: 18,
-                                //                           color: Color(0xffe0dad9),
-                                //                         ),
-                                //                       ),
-                                //                     ),
-                                //                   )
-                                //                 ],
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       )
-                                //     ],
-                                //   ),
-                                // ),
                               ],
                             );
                           })),

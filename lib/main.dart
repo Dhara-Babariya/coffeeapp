@@ -1,4 +1,5 @@
 import 'package:coffeeapp/Activities/Home_Screen.dart';
+import 'package:coffeeapp/Activities/cart_screen.dart';
 import 'package:coffeeapp/Activities/item_screen.dart';
 import 'package:coffeeapp/Activities/getStarted.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: GetStartedPage(),
     );
   }
 }
