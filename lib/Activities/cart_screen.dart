@@ -2,8 +2,12 @@ import 'package:coffeeapp/Activities/Home_Screen.dart';
 import 'package:coffeeapp/Activities/botton_nav.dart';
 import 'package:flutter/material.dart';
 
+import '../Model/item_model.dart';
+
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+
+   CartPage({super.key, required this.cartitem}) ;
+  final List<dynamic> cartitem ;
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -11,14 +15,28 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
 
-  List coffee = ['assets/images/coffee_mug.png',
-    'assets/images/starbuscks_mug.png',];
-  List name = ['Creamy Latte','Capucino Latte'];
-  List price = ['Rp.40.000','Rp.50.000'];
+
+  int quantityCount = 0;
+
+  void decrementQuantity(){
+    setState(() {
+      if(quantityCount > 0){
+        quantityCount--;
+      }
+    });
+  }
+
+  void incrementQuantity(){
+    setState(() {
+      quantityCount++;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 15,
+        centerTitle: false,
         title: Text(
         '2 items in cart',
           style: TextStyle(
@@ -38,10 +56,10 @@ class _CartPageState extends State<CartPage> {
             children: [
               ListView.builder(
                   shrinkWrap: true,
-                  itemCount: coffee.length,
+                  itemCount: widget.cartitem.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.only(left: 10,right: 10),
                       child: Stack(
                         children: [
                           Row(
@@ -56,7 +74,7 @@ class _CartPageState extends State<CartPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(20),
                                   child: Image.asset(
-                                    coffee[index],
+                                    widget.cartitem[index],
                                   ),
                                 ),
                               ),
@@ -66,11 +84,10 @@ class _CartPageState extends State<CartPage> {
                                   height : 120,
                                    child: Column(
                                      crossAxisAlignment: CrossAxisAlignment.start,
-
                                    children: [
                                       Padding(
                                         padding: const EdgeInsets.only(top:10),
-                                        child: Text(name[index],
+                                        child: Text(widget.cartitem[index],
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontFamily: 'Poppins',
@@ -81,7 +98,7 @@ class _CartPageState extends State<CartPage> {
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(bottom: 10,top: 7),
-                                                child: Text( price[index],
+                                                child: Text( widget.cartitem[index],
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 14,
@@ -106,7 +123,9 @@ class _CartPageState extends State<CartPage> {
                                                       borderRadius: BorderRadius.circular(50)), //<-- SEE HERE
                                                   child: InkWell(
                                                     borderRadius: BorderRadius.circular(100.0),
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      decrementQuantity();
+                                                    },
                                                     child: Icon(
                                                       Icons.remove,
                                                       size: 17,
@@ -133,7 +152,9 @@ class _CartPageState extends State<CartPage> {
                                                       borderRadius: BorderRadius.circular(50)), //<-- SEE HERE
                                                   child: InkWell(
                                                     borderRadius: BorderRadius.circular(100.0),
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      incrementQuantity();
+                                                    },
                                                     child: Icon(
                                                       Icons.add,
                                                       size: 17,
@@ -160,7 +181,7 @@ class _CartPageState extends State<CartPage> {
                               child: Ink(
                                 decoration: BoxDecoration(
                                     border: Border.all(color: Color(0xffeb3223), width: 2),
-                                    borderRadius: BorderRadius.circular(50)), //<-- SEE HERE
+                                    borderRadius: BorderRadius.circular(50)),
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(100.0),
                                   onTap: () {},
@@ -252,18 +273,15 @@ class _CartPageState extends State<CartPage> {
                       color: Color(0xff583732),
                     ),
 
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          'CheckOut',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            color: Color(0xffffffff),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                    child: Center(
+                      child: Text(
+                        'CheckOut',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          color: Color(0xffffffff),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
                         ),
                       ),
                     ),

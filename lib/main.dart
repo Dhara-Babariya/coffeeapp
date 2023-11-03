@@ -1,23 +1,30 @@
 import 'package:coffeeapp/Activities/Home_Screen.dart';
+import 'package:coffeeapp/Activities/appsliver.dart';
 import 'package:coffeeapp/Activities/cart_screen.dart';
 import 'package:coffeeapp/Activities/item_screen.dart';
 import 'package:coffeeapp/Activities/getStarted.dart';
+import 'package:coffeeapp/Activities/slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'package:device_preview/device_preview.dart';
+
+void main() => runApp(
+  DevicePreview(
+    enabled: !kReleaseMode,
+    builder: (context) => MyApp(),
+  ),
+);
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,
-      home: GetStartedPage(),
+      home:GetStartedPage(),
     );
   }
 }

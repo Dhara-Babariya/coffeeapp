@@ -1,6 +1,7 @@
 import 'package:coffeeapp/Activities/Home_Screen.dart';
 import 'package:coffeeapp/Activities/cart_screen.dart';
 import 'package:coffeeapp/Activities/getStarted.dart';
+import 'package:coffeeapp/Model/item_model.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavPage extends StatefulWidget {
@@ -14,11 +15,11 @@ class _BottomNavPageState extends State<BottomNavPage> {
 
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    HomeScreen(),
-    CartPage(),
-    HomeScreen(),
-   ];
+    const HomeScreen(),
+    const HomeScreen(),
+     CartPage(cartitem: []),
+     HomeScreen(),
+     ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -32,22 +33,22 @@ class _BottomNavPageState extends State<BottomNavPage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
+          items: [
+            const BottomNavigationBarItem(
                  icon: Icon(Icons.home,),
                 label: 'home',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
                 icon: Icon(Icons.search,
                   ),
                 label: 'search',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart,
                 ),
               label: 'person',
             ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Icons.person,
               ),
               label: 'person',
@@ -55,13 +56,14 @@ class _BottomNavPageState extends State<BottomNavPage> {
           ],
           type: BottomNavigationBarType.shifting,
           currentIndex: _selectedIndex,
-          backgroundColor:Color(0xffffffff) ,
-          unselectedItemColor: Color(0xff8f8787),
+          backgroundColor:const Color(0xffffffff) ,
+          unselectedItemColor: const Color(0xff8f8787),
           // selectedItemColor: Color(0xff531607),
-          fixedColor:Color(0xff531607) ,
+          fixedColor:const Color(0xff531607) ,
           iconSize: 40,
           onTap: _onItemTapped,
-          elevation: 5
+          elevation: 0,
+
 
       ),
     );
