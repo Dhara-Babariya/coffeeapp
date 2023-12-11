@@ -13,13 +13,19 @@ class BottomNavPage extends StatefulWidget {
 
 class _BottomNavPageState extends State<BottomNavPage> {
 
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+  }
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
-    const HomeScreen(),
-    const HomeScreen(),
-     CartPage(cartitem: []),
+     HomeScreen(),
+     HomeScreen(),
+     CartPage(),
      HomeScreen(),
      ];
+
 
   void _onItemTapped(int index) {
     setState(() {
@@ -46,7 +52,7 @@ class _BottomNavPageState extends State<BottomNavPage> {
             const BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart,
                 ),
-              label: 'person',
+              label: 'Cart',
             ),
             const BottomNavigationBarItem(
               icon: Icon(Icons.person,
@@ -54,14 +60,22 @@ class _BottomNavPageState extends State<BottomNavPage> {
               label: 'person',
             ),
           ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          // if (index == 2) {
+          //   Navigator.push(context, MaterialPageRoute(builder: (context) => CartPage(cartitem: itemdetaillist)));
+          // } else {
+            setState(() {
+              _selectedIndex = index;
+            });
+          // }
+        },
           type: BottomNavigationBarType.shifting,
-          currentIndex: _selectedIndex,
           backgroundColor:const Color(0xffffffff) ,
           unselectedItemColor: const Color(0xff8f8787),
           // selectedItemColor: Color(0xff531607),
           fixedColor:const Color(0xff531607) ,
           iconSize: 40,
-          onTap: _onItemTapped,
           elevation: 0,
 
 

@@ -1,6 +1,9 @@
-import 'package:coffeeapp/Activities/cart_screen.dart';
+import 'package:coffeeapp/Activities/Home_Screen.dart';
+import 'package:coffeeapp/Activities/Home_Screen.dart';
 import 'package:coffeeapp/Model/item_model.dart';
 import 'package:flutter/material.dart';
+
+import 'coffee_counter.dart';
 
 class ItemPage extends StatefulWidget {
   final ItemDetail product;
@@ -12,8 +15,44 @@ class ItemPage extends StatefulWidget {
 }
 
 class _ItemPageState extends State<ItemPage> {
+  final CoffeeCounter coffeeCounter = CoffeeCounter();
 
-  List addOns = [
+  dialog(int index) {
+    setState(() {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Are You Sure !!"),
+          content: const Text("You have delete this item in cart ?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+              child: const Text("NO"),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  coffeeCounter.itemCountMap.remove(index);
+                  coffeeCounter.updateTotalPrice();
+
+                Navigator.of(ctx).pop();
+
+                });
+              },
+              child: const Text("YES"),
+
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  // int itemCount = 0;
+
+      List addOns = [
     'assets/images/sugar.png',
     'assets/images/keju.png',
     'assets/images/boba.png',
@@ -27,8 +66,12 @@ class _ItemPageState extends State<ItemPage> {
     'assets/images/keju.png',
     'assets/images/boba.png'
   ];
+
   @override
   Widget build(BuildContext context) {
+    int itemId = widget.product.id;
+    final currentItem = widget.product;
+    final itemCount = coffeeCounter.itemCountMap[currentItem];
     return Scaffold(
         body: Stack(
       children: [
@@ -57,53 +100,50 @@ class _ItemPageState extends State<ItemPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                   Container(
-                     height: 400,
+                  Container(
+                    height: 400,
                     width: 400,
                     alignment: Alignment.topCenter,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
                         image: ExactAssetImage(
                           'assets/images/shadow.png',
-
                         ),
                       ),
                     ),
-
                     child: Padding(
                       padding: const EdgeInsets.only(top: 80),
                       child: Container(
                         alignment: Alignment.topCenter,
                         height: 230,
                         width: 190,
-                        decoration:  BoxDecoration(
+                        decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: ExactAssetImage('${widget.product.image}'),
+                            image: ExactAssetImage(widget.product.image),
                           ),
                         ),
-
                       ),
                     ),
-
                   ),
                 ],
-
               ),
             ),
           ),
         ),
-         Positioned(
-           top: 40,
-           left: 10,
-           child: IconButton(
-             onPressed: () {
-               Navigator.pop(context);
-             },
-             icon:Icon(Icons.arrow_back_ios_new,
-             color: Color(0xffffffff),
-             size: 20,),
+        Positioned(
+          top: 40,
+          left: 10,
+          child: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios_new,
+              color: Color(0xffffffff),
+              size: 20,
             ),
-         ),
+          ),
+        ),
         Positioned(
           top: 350,
           bottom: 0,
@@ -123,7 +163,7 @@ class _ItemPageState extends State<ItemPage> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 20,bottom: 20),
+                          padding: const EdgeInsets.only(top: 20, bottom: 20),
                           child: Column(
                             children: [
                               Container(
@@ -131,27 +171,31 @@ class _ItemPageState extends State<ItemPage> {
                                   borderRadius: BorderRadius.circular(50),
                                   color: Color(0xff583732),
                                 ),
-                                  child: const Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 15,right:7),
-                                        child: Icon(Icons.star,
-                                        color: Color(0xffd9c61c),),
+                                child: const Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          EdgeInsets.only(left: 15, right: 7),
+                                      child: Icon(
+                                        Icons.star,
+                                        color: Color(0xffd9c61c),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 17,top: 5,bottom: 5),
-                                        child: Text(
-                                          '4 . 5',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xffffffff),
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                          ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: 17, top: 5, bottom: 5),
+                                      child: Text(
+                                        '4 . 5',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xffffffff),
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
                                         ),
                                       ),
-                                    ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -162,18 +206,18 @@ class _ItemPageState extends State<ItemPage> {
                             children: [
                               Align(
                                 alignment: Alignment.centerRight,
-                                child: Text('${widget.product.price}',
-                                style: TextStyle(
-                                  fontFamily: 'Poppins',
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xffd9c61c)
-                                ),),
+                                child: Text(
+                                  '${widget.product.price}',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xffd9c61c)),
+                                ),
                               ),
                             ],
                           ),
                         ),
-
                       ],
                     ),
                     Row(
@@ -184,89 +228,138 @@ class _ItemPageState extends State<ItemPage> {
                               alignment: Alignment.centerRight,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: Text('${widget.product.name}',
+                                child: Text(
+                                  '${widget.product.name}',
                                   style: TextStyle(
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20,
-                                      color: Color(0xff583732)
-                                  ),),
+                                      color: Color(0xff583732)),
+                                ),
                               ),
                             ),
                           ],
                         ),
                         Expanded(
-                          child:  Column(
+                          child: Column(
                             children: [
-                             Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                               children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Material(
+                                      type: MaterialType.transparency,
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff583732),
+                                                width: 2.5),
+                                            borderRadius: BorderRadius.circular(
+                                                50)), //<-- SEE HERE
+                                        child: InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          onTap: () {
 
-                                 Padding(
-                                   padding: const EdgeInsets.only(right: 10),
-                                   child: Material(
-                                     type: MaterialType.transparency,
-                                     child: Ink(
-                                       decoration: BoxDecoration(
-                                           border: Border.all(color: Color(0xff583732), width: 2.5),
-                                           borderRadius: BorderRadius.circular(50)), //<-- SEE HERE
-                                       child: InkWell(
-                                         borderRadius: BorderRadius.circular(100.0),
-                                         onTap: () {},
-                                         child: Icon(
-                                           Icons.remove,
-                                           size: 22,
-                                           color: Color(0xff583732),
-                                         ),
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                                 Text('1',
-                                 style: TextStyle(
-                                   color: Color(0xff583732),
-                                   fontSize: 20,
-                                   fontWeight: FontWeight.bold,
-                                   fontFamily: 'Poppins'
-                                 ),),
-                                 Padding(
-                                   padding: const EdgeInsets.only(left: 10),
-                                   child: Material(
-                                     type: MaterialType.transparency,
-                                     child: Ink(
-                                       decoration: BoxDecoration(
-                                           border: Border.all(color: Color(0xff583732), width: 2.5),
-                                           borderRadius: BorderRadius.circular(50)), //<-- SEE HERE
-                                       child: InkWell(
-                                         borderRadius: BorderRadius.circular(100.0),
-                                         onTap: () {},
-                                         child: Icon(
-                                           Icons.add,
-                                           size: 22,
-                                           color: Color(0xff583732),
-                                         ),
-                                       ),
-                                     ),
-                                   ),
-                                 ),
-                               ],
-                             )
+                                            setState(() {
+                                              if (coffeeCounter
+                                                  .itemCountMap
+                                                  .containsKey(
+                                                  currentItem)) {
+                                                if (coffeeCounter
+                                                    .itemCountMap[
+                                                currentItem]! >
+                                                    1) {
+                                                  coffeeCounter
+                                                      .itemCountMap[
+                                                  currentItem] = coffeeCounter
+                                                      .itemCountMap[
+                                                  currentItem]! -
+                                                      1;
+                                                }
+                                              }
+                                            });
+
+                                          },
+                                          child: const Icon(
+                                            Icons.remove,
+                                            size: 22,
+                                            color: Color(0xff583732),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                     itemCount.toString() ,
+                                    style: TextStyle(
+                                        color: Color(0xff583732),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins'),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Material(
+                                      type: MaterialType.transparency,
+                                      child: Ink(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Color(0xff583732),
+                                                width: 2.5),
+                                            borderRadius: BorderRadius.circular(
+                                                50)), //<-- SEE HERE
+                                        child: InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(100.0),
+                                          onTap: () {
+                                            setState(() {
+                                              if (coffeeCounter.itemCountMap
+                                                  .containsKey(currentItem)) {
+                                                itemdetaillist.add(currentItem);
+                                                coffeeCounter.itemCountMap[
+                                                        currentItem] =
+                                                    coffeeCounter.itemCountMap[
+                                                            currentItem]! +
+                                                        1;
+                                              } else {
+                                                coffeeCounter.itemCountMap[
+                                                    currentItem] = 1;
+                                                itemdetaillist.add(currentItem);
+                                              }
+                                              itemdetaillist
+                                                  .add(widget.product);
+                                              coffeeCounter.updateTotalPrice();
+                                            });
+                                          },
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 22,
+                                            color: Color(0xff583732),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         ),
-
                       ],
                     ),
-                    Column(
+                    const Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Text('Creamy Latte dapat mengatur  tingkat kemanisan kopi sesuai selera',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Poppins',
-                            color: Color(0xffa89795)
-                          ),),
+                          padding: EdgeInsets.only(top: 15),
+                          child: Text(
+                            'Creamy Latte dapat mengatur  tingkat kemanisan kopi sesuai selera',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Poppins',
+                                color: Color(0xffa89795)),
+                          ),
                         )
                       ],
                     ),
@@ -296,25 +389,25 @@ class _ItemPageState extends State<ItemPage> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 20, right: 35 ),
+                                          top: 20, right: 35),
                                       child: Stack(
                                         clipBehavior: Clip.none,
-                                        children:[
+                                        children: [
                                           Container(
                                             height: 80,
                                             width: 80,
                                             decoration: BoxDecoration(
                                                 color: const Color(0xffd9d9d9),
-                                                borderRadius: BorderRadius.circular(20)),
-                                            child:
-                                            Center(
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Center(
                                               child: Image.asset(
-                                                    addOns[index],
-                                                  ),
+                                                addOns[index],
+                                              ),
                                             ),
                                           ),
                                           Positioned(
-                                            bottom:-6,
+                                            bottom: -6,
                                             right: -3,
                                             child: Container(
                                               height: 20,
@@ -322,12 +415,15 @@ class _ItemPageState extends State<ItemPage> {
                                               decoration: BoxDecoration(
                                                 color: Colors.brown,
                                               ),
-                                              child: Center(child: Icon(Icons.add,
-                                              color: Color(0xffffffff),
-                                              size: 20,)),
+                                              child: Center(
+                                                  child: Icon(
+                                                Icons.add,
+                                                color: Color(0xffffffff),
+                                                size: 20,
+                                              )),
                                             ),
                                           )
-                                      ] ,
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -341,7 +437,25 @@ class _ItemPageState extends State<ItemPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            },
+                            setState(() {
+                              if (coffeeCounter.itemCountMap
+                                  .containsKey(currentItem)) {
+                                itemdetaillist.add(currentItem);
+                                coffeeCounter.itemCountMap[
+                                currentItem] =
+                                    coffeeCounter.itemCountMap[
+                                    currentItem]! +
+                                        1;
+                              } else {
+                                coffeeCounter.itemCountMap[
+                                currentItem] = 1;
+                                itemdetaillist.add(currentItem);
+                              }
+                              itemdetaillist
+                                  .add(widget.product);
+                              coffeeCounter.updateTotalPrice();
+                            });
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(5),
                             child: Container(
@@ -349,11 +463,11 @@ class _ItemPageState extends State<ItemPage> {
                                 borderRadius: BorderRadius.circular(100),
                                 color: Color(0xff583732),
                               ),
-
                               child: Align(
                                 alignment: Alignment.center,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(top: 15,bottom: 15),
+                                  padding: const EdgeInsets.only(
+                                      top: 15, bottom: 15),
                                   child: Text(
                                     'Add To Cart',
                                     textAlign: TextAlign.center,
@@ -381,5 +495,3 @@ class _ItemPageState extends State<ItemPage> {
     ));
   }
 }
-
-

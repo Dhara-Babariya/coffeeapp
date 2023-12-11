@@ -4,7 +4,12 @@ import 'package:coffeeapp/Activities/cart_screen.dart';
 import 'package:coffeeapp/Activities/getStarted.dart';
 import 'package:coffeeapp/Activities/item_screen.dart';
 import 'package:coffeeapp/Model/item_model.dart';
+import 'package:coffeeapp/Model/itemdetail_model.dart';
 import 'package:flutter/material.dart';
+
+import 'coffee_counter.dart';
+
+List<ItemDetail> itemdetaillist = [];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +19,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final CoffeeCounter coffeeCounter = CoffeeCounter();
+
   List images = [
     'assets/images/coffee_mug.png',
     'assets/images/Capucino.png',
@@ -55,71 +63,77 @@ class _HomeScreenState extends State<HomeScreen> {
         name: 'Capucino Latte',
         price: 'Rp.50.000',
         id: 2),
-    ItemDetail(
-        image: 'assets/images/coffee_mug.png',
-        name: 'Creamy Latte',
-        price: 'Rp.40.000',
-        id: 3),
-    ItemDetail(
-        image: 'assets/images/starbuscks_mug.png',
-        name: 'Capucino Latte',
-        price: 'Rp.50.000',
-        id: 4),
-    ItemDetail(
-        image: 'assets/images/coffee_mug.png',
-        name: 'Creamy Latte',
-        price: 'Rp.40.000',
-        id: 5),
-    ItemDetail(
-        image: 'assets/images/starbuscks_mug.png',
-        name: 'Capucino Latte',
-        price: 'Rp.50.000',
-        id: 6),
-    ItemDetail(
-        image: 'assets/images/coffee_mug.png',
-        name: 'Creamy Latte',
-        price: 'Rp.40.000',
-        id: 7),
-    ItemDetail(
-        image: 'assets/images/starbuscks_mug.png',
-        name: 'Capucino Latte',
-        price: 'Rp.50.000',
-        id: 8),
-    ItemDetail(
-        image: 'assets/images/coffee_mug.png',
-        name: 'Creamy Latte',
-        price: 'Rp.40.000',
-        id: 9),
-    ItemDetail(
-        image: 'assets/images/starbuscks_mug.png',
-        name: 'Capucino Latte',
-        price: 'Rp.50.000',
-        id: 10),
-    ItemDetail(
-        image: 'assets/images/coffee_mug.png',
-        name: 'Creamy Latte',
-        price: 'Rp.40.000',
-        id: 11),
-    ItemDetail(
-        id: 12,
-        image: 'assets/images/starbuscks_mug.png',
-        name: 'Capucino Latte',
-        price: 'Rp.50.000'),
+    // ItemDetail(
+    //     image: 'assets/images/coffee_mug.png',
+    //     name: 'Creamy Latte',
+    //     price: 'Rp.40.000',
+    //     id: 3),
+    // ItemDetail(
+    //     image: 'assets/images/starbuscks_mug.png',
+    //     name: 'Capucino Latte',
+    //     price: 'Rp.50.000',
+    //     id: 4),
+    // ItemDetail(
+    //     image: 'assets/images/coffee_mug.png',
+    //     name: 'Creamy Latte',
+    //     price: 'Rp.40.000',
+    //     id: 5),
+    // ItemDetail(
+    //     image: 'assets/images/starbuscks_mug.png',
+    //     name: 'Capucino Latte',
+    //     price: 'Rp.50.000',
+    //     id: 6),
+    // ItemDetail(
+    //     image: 'assets/images/coffee_mug.png',
+    //     name: 'Creamy Latte',
+    //     price: 'Rp.40.000',
+    //     id: 7),
+    // ItemDetail(
+    //     image: 'assets/images/starbuscks_mug.png',
+    //     name: 'Capucino Latte',
+    //     price: 'Rp.50.000',
+    //     id: 8),
+    // ItemDetail(
+    //     image: 'assets/images/coffee_mug.png',
+    //     name: 'Creamy Latte',
+    //     price: 'Rp.40.000',
+    //     id: 9),
+    // ItemDetail(
+    //     image: 'assets/images/starbuscks_mug.png',
+    //     name: 'Capucino Latte',
+    //     price: 'Rp.50.000',
+    //     id: 10),
+    // ItemDetail(
+    //     image: 'assets/images/coffee_mug.png',
+    //     name: 'Creamy Latte',
+    //     price: 'Rp.40.000',
+    //     id: 11),
+    // ItemDetail(
+    //     id: 12,
+    //     image: 'assets/images/starbuscks_mug.png',
+    //     name: 'Capucino Latte',
+    //     price: 'Rp.50.000'),
   ];
 
-  List itemdetailList = [];
-  int? id;
 
-  void addItems() {
-    for (var item in itemdetails) {
-      if (!itemdetailList.any((existingItem) => existingItem.id == item.id)) {
-        itemdetailList
-            .add(ItemDetail(image: '', name: '', price: '', id: item.id));
-      }
-    }
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
   }
 
-  Icon _searchIcon = Icon(
+  void addItems(int index) {
+    setState(() {
+      ItemDetail selectedProduct = itemdetails[index];
+
+      itemdetaillist.add(selectedProduct);
+      //
+      print(
+          '${itemdetaillist.length}********************************************************');
+    });
+  }
+
+  Icon _searchIcon = const Icon(
     Icons.search,
   );
   bool isSearchClicked = false;
@@ -245,34 +259,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 30, left: 10, right: 10),
-                                        child: Container(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: RichText(
-                                              text: const TextSpan(
-                                                text: " Today's Offer",
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily: 'Poppins',
-                                                  color: Color(0xffffffff),
-                                                ),
-                                                children: <TextSpan>[
-                                                  TextSpan(
-                                                      text:
-                                                          '\n Free Bottle Of Coffee Latte',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 16,
-                                                          height: 2.3)),
-                                                  TextSpan(
-                                                      text:
-                                                          '\n On All Orders Above Rp.200.000 ',
-                                                      style: TextStyle(
-                                                          fontSize: 15,
-                                                          height: 1.5)),
-                                                ],
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: RichText(
+                                            text: const TextSpan(
+                                              text: " Today's Offer",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontFamily: 'Poppins',
+                                                color: Color(0xffffffff),
                                               ),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                    text:
+                                                        '\n Free Bottle Of Coffee Latte',
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 16,
+                                                        height: 2.3)),
+                                                TextSpan(
+                                                    text:
+                                                        '\n On All Orders Above Rp.200.000 ',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        height: 1.5)),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -311,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    right: 10, left: 10, bottom: 10),
+                                    right: 10, left: 10,),
                                 child: GridView.count(
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -354,6 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 )));
                                               },
                                               child: Container(
+
                                                 decoration: BoxDecoration(
                                                     gradient:
                                                         const LinearGradient(
@@ -379,7 +392,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              bottom: 12,
+                                                              bottom: 10,
                                                               top: 15),
                                                       child: Column(
                                                         children: [
@@ -394,36 +407,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              left: 20),
-                                                      child: Column(
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                itemdetails[
-                                                                        index]
-                                                                    .name,
-                                                                style:
-                                                                    const TextStyle(
-                                                                  fontFamily:
-                                                                      'Poppins',
-                                                                  color: Color(
-                                                                      0xff583732),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 7,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    bottom: 10,
-                                                                    right: 15),
-                                                            child: Row(
+                                                              left: 10),
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                bottom: 12,
+                                                                right: 5),
+                                                        child: Row(
+                                                          children: [
+                                                            Column(
                                                               children: [
+                                                                Text(
+                                                                  itemdetails[
+                                                                  index]
+                                                                      .name,
+                                                                  style:
+                                                                  const TextStyle(
+                                                                    fontFamily:
+                                                                    'Poppins',
+                                                                    color: Color(
+                                                                        0xff583732),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 5,
+                                                                ),
                                                                 Text(
                                                                   itemdetails[
                                                                           index]
@@ -439,53 +448,44 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         0xffd9c61c),
                                                                   ),
                                                                 ),
-                                                                const Spacer(),
-                                                                Material(
-                                                                  type: MaterialType
-                                                                      .transparency,
-                                                                  child: Ink(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      border: Border.all(
-                                                                          width:
-                                                                              0),
-                                                                      color: const Color(
-                                                                          0xff531607),
-                                                                    ),
-                                                                    child:
-                                                                        InkWell(
-                                                                      //borderRadius: BorderRadius.circular(100.0),
-                                                                      onTap:
-                                                                          () {
-                                                                        addItems();
-                                                                        print(
-                                                                            '$itemdetailList============================');
-                                                                        Navigator.push(
-                                                                            context,
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => CartPage(
-                                                                                cartitem:
-                                                                                  itemdetailList,
-
-                                                                              ),
-                                                                            ));
-                                                                      },
-                                                                      child:
-                                                                          const Icon(
-                                                                        Icons
-                                                                            .add,
-                                                                        size:
-                                                                            20,
-                                                                        color: Color(
-                                                                            0xffe0dad9),
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                )
                                                               ],
                                                             ),
-                                                          ),
-                                                        ],
+                                                            Spacer(),
+                                                            Padding(
+                                                              padding: const EdgeInsets.all(10),
+                                                              child: Material(
+                                                                type: MaterialType
+                                                                    .transparency,
+                                                                child: Ink(
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: Border.all(
+                                                                    ),
+                                                                    color: const Color(
+                                                                        0xff531607),
+                                                                  ),
+                                                                  child:
+                                                                      InkWell(
+                                                                    //borderRadius: BorderRadius.circular(100.0),
+                                                                    onTap:
+                                                                        () {
+                                                                          addItems(index);
+                                                                       },
+                                                                    child:
+                                                                        const Icon(
+                                                                      Icons
+                                                                          .add,
+                                                                      size:
+                                                                          30,
+                                                                      color: Color(
+                                                                          0xffe0dad9),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
                                                     )
                                                   ],
@@ -594,7 +594,8 @@ class WhatsappAppbar extends SliverPersistentHeaderDelegate {
             ),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.search, size: 25, color: Color(0xff4b2826)),
+              icon:
+                  const Icon(Icons.search, size: 25, color: Color(0xff4b2826)),
             )),
       );
     }
@@ -607,20 +608,21 @@ class WhatsappAppbar extends SliverPersistentHeaderDelegate {
         height: 50,
         width: sizeTween.transform(relativeFullScrollOffset),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30), color: Color(0xffefeeee)),
+            borderRadius: BorderRadius.circular(30),
+            color: const Color(0xffefeeee)),
         child: Row(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, right: 10),
+            const Padding(
+              padding: EdgeInsets.only(left: 20, right: 10),
               child: Icon(Icons.search, size: 25, color: Color(0xffaca4a4)),
             ),
             if (relativeFullScrollOffset < 0.8)
-              Expanded(
+              const Expanded(
                 child: TextField(
                   cursorColor: Colors.brown,
                   decoration: InputDecoration(
                     hintText: 'Search...',
-                    hintStyle: const TextStyle(
+                    hintStyle: TextStyle(
                       fontSize: 20,
                       fontFamily: 'Poppins',
                       color: Color(0xffaca4a4),
