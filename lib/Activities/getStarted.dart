@@ -1,5 +1,6 @@
 import 'package:coffeeapp/Activities/Home_Screen.dart';
 import 'package:coffeeapp/Activities/botton_nav.dart';
+import 'package:coffeeapp/Activities/pro_bottom_nav.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedPage extends StatefulWidget {
@@ -181,7 +182,7 @@ class _GetStartedPageState extends State<GetStartedPage> with TickerProviderStat
                                     borderRadius: BorderRadius.circular(100.0),
                                     onTap: () {
                                       Navigator.pushAndRemoveUntil(context, MaterialPageRoute
-                                        (builder: (context)=> const BottomNavPage()),
+                                        (builder: (context)=> const ProviderBottomNavPage()),
                                               (route) => false);
                                     },
                                     child: const Icon(

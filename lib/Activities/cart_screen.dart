@@ -1,5 +1,6 @@
 import 'package:coffeeapp/Activities/Home_Screen.dart';
 import 'package:coffeeapp/Activities/botton_nav.dart';
+import 'package:coffeeapp/Activities/proHomePage.dart';
 import 'package:flutter/material.dart';
 
 import '../Model/item_model.dart';
@@ -60,7 +61,7 @@ class _CartPageState extends State<CartPage> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  // itemdetaillist.remove();
+                  itemdetaillist.remove(index);
                   updateTotalPrice();
                 });
                 Navigator.of(ctx).pop();
@@ -85,9 +86,11 @@ class _CartPageState extends State<CartPage> {
     });
   }
 
-  void delete(int index) {
-    setState(() {});
-  }
+  // void delete(int index) {
+  //   setState(() {
+  //     itemdetaillists.removeAt(index);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +334,7 @@ class _CartPageState extends State<CartPage> {
                                   child: InkWell(
                                     borderRadius: BorderRadius.circular(100.0),
                                     onTap: () {
-                                      delete(index);
+                                      // delete(index);
                                     },
                                     child: const Icon(
                                       Icons.close,
